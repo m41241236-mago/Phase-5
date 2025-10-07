@@ -1,0 +1,24 @@
+
+
+JWT Token Refresh & Expiry - Sample Output
+
+1. *Login Request*
+Request: POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+{"username": "user", "password": "password"}
+Response: {"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey...", "refreshToken": "abcde123-4b67-8c9d-0dd4-c57e9f11cd2d", "tokenType": "Bearer"}
+
+2. *Access Protected API (Profile)*
+Request: GET http://localhost:8080/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey...
+Response: {"username": "user", "timestamp": "2025-09-12T12:45:32.120Z"}
+
+3. *Expired Access Token*
+Request with expired token: GET http://localhost:8080/api/auth/profile
+Response: {"error": "invalid token"}
+
+4. *Refresh Token*
+Request: POST http://localhost:8080/api/auth/refresh
+Content-Type: application/json
+{"refreshToken": "abcde123-4b67-8c9d-0dd4-c57e9f11cd2d"}
+Response: {"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey...", "refreshToken": "3170-4b1a-9b42-a61423d87f1e", "tokenType": "Bearer"}
